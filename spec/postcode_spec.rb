@@ -97,8 +97,9 @@ describe Postcodesio do
   context "multiple postcodes validation" do
 
     before(:all) do
+      @postcode = RandomPostcodes.new
       @postcodesio = Postcodesio.new
-      @postcodesio.get_multiple_postcodes(['TW106DF', 'HP52BN', 'S101BJ']) #Add in array of postcodes
+      @postcodesio.get_multiple_postcodes(@postcode.get_random_postcodes(3)) #Add in array of postcodes
       @response = @postcodesio
     end
 
@@ -121,28 +122,52 @@ describe Postcodesio do
       end
     end
 
-    it "should return an quality key integer between 1-9" do
+    it "should return a quality key integer between 1-9" do
+      @response.search_multiple_results_for('quality').each do |item|
+        expect(item).to be_between(1, 9).inclusive
+      end
     end
 
     it "should return an ordnance survey eastings value as integer" do
+      @response.search_multiple_results_for('eastings').each do |item|
+        expect(item).to be_kind_of(Integer)
+      end
     end
 
-    it "should return an ordnance survey eastings value as integer" do
+    it "should return an ordnance survey northings value as integer" do
+      @response.search_multiple_results_for('northings').each do |item|
+        expect(item).to be_kind_of(Integer)
+      end
     end
 
     it "should return a country which is one of the four constituent countries of the UK" do
+      @response.search_multiple_results_for('country').each do |item|
+        expect(item.downcase).to eq("england").or eq("northern ireland").or eq("scotland").or eq("wales")
+      end
     end
 
     it "should return a string value for NHS authority " do
+      @response.search_multiple_results_for('nhs_ha').each do |item|
+        expect(item).to be_kind_of(String)
+      end
     end
 
     it "should return a longitude float value" do
+      @response.search_multiple_results_for('longitude').each do |item|
+        expect(item).to be_kind_of(Float)
+      end
     end
 
     it "should return a latitude float value" do
+      @response.search_multiple_results_for('latitude').each do |item|
+        expect(item).to be_kind_of(Float)
+      end
     end
 
     it "should return a parliamentary constituency string" do
+      @response.search_multiple_results_for('parliamentary_constituency').each do |item|
+        expect(item).to be_kind_of(String)
+      end
     end
 
     it "should return a european_electoral_region string" do

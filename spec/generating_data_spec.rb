@@ -14,4 +14,13 @@ describe RandomPostcodes do
     expect(postcode.full_valid?).to be true
   end
 
+  it "should return an array of postcodes of correct length and in correct format" do
+    @data.get_random_postcodes(3).each do |postcode|
+      code = UKPostcode.parse(postcode)
+      expect(code.full_valid?).to be true
+    end
+    expect(@data.get_random_postcodes(3).length).to eq 3
+    expect(@data.get_random_postcodes(10).length).to eq 10
+  end
+
 end
