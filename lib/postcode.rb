@@ -42,4 +42,12 @@ class Postcodesio
     input['status']
   end
 
+  def get_postcodes_multiple(iterator)
+    @multiple['result'][iterator]['result']['postcode']
+  end
+
+  def get_results_multiple(iterator)
+    @multiple['result'][iterator]['result']
+  end
+
 end

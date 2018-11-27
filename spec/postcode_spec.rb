@@ -65,11 +65,11 @@ describe Postcodesio do
     end
 
     it "should return a region string" do
-      expect(@response.search_single_result_for('region')).to be_kind_of(String).or be_null
+      expect(@response.search_single_result_for('region')).to be_kind_of(String).or be_nil
     end
 
     it "should return a parish string" do
-      expect(@response.search_single_result_for('parish')).to be_kind_of(String).or be_null
+      expect(@response.search_single_result_for('parish')).to be_kind_of(String).or be_nil
     end
 
     it "should return a lsoa string" do
@@ -77,7 +77,7 @@ describe Postcodesio do
     end
 
     it "should return a msoa string" do
-      expect(@response.search_single_result_for('msoa')).to be_kind_of(String).or be_null
+      expect(@response.search_single_result_for('msoa')).to be_kind_of(String).or be_nil
     end
     # admin ward and county are not documented however tested below
 
@@ -90,7 +90,7 @@ describe Postcodesio do
     end
 
     it "should return a outcode string of 3-4 characters" do
-      expect(@response.search_single_result_for('outcode').length).to be_between(3, 4)
+      expect(@response.search_single_result_for('outcode').length).to be_between(2, 4)
     end
   end
 
@@ -99,7 +99,8 @@ describe Postcodesio do
     before(:all) do
       @postcode = RandomPostcodes.new
       @postcodesio = Postcodesio.new
-      @postcodesio.get_multiple_postcodes(@postcode.get_random_postcodes(5)) #Add in array of postcodes
+      @postcode_array = @postcode.get_random_postcodes(5)
+      @postcodesio.get_multiple_postcodes(@postcode_array) #Add in array of postcodes
       @response = @postcodesio
     end
 
@@ -108,12 +109,15 @@ describe Postcodesio do
     end
 
     it "should return the first query as the first postcode in the response" do
-    end
-
-    it "should return the second query as the first postcode in the response" do
+      for i in 0..(@response.multiple.length - 1) do
+        expect(@response.get_postcodes_multiple(i).downcase.delete(' ')).to eq(@postcode_array[i].downcase)
+      end
     end
 
     it "should have a results hash" do
+      for i in 0..(@response.multiple.length - 1) do
+        expect(@response.get_results_multiple(i)).to be_kind_of(Hash)
+      end
     end
 
     it "should return a postcode between 5-7 in length"  do
@@ -160,13 +164,13 @@ describe Postcodesio do
 
     it "should return a latitude float value" do
       @response.search_multiple_results_for('latitude').each do |item|
-        expect(item).to be_kind_of(String)
+        expect(item).to be_kind_of(Float)
       end
     end
 
     it "should return a parliamentary constituency string" do
       @response.search_multiple_results_for('parliamentary_constituency').each do |item|
-        expect(item).to be_kind_of(Float)
+        expect(item).to be_kind_of(String)
       end
     end
 
@@ -184,13 +188,13 @@ describe Postcodesio do
 
     it "should return a region string" do
       @response.search_multiple_results_for('region').each do |item|
-        expect(item).to be_kind_of(String).or be_null
+        expect(item).to be_kind_of(String).or be_nil
       end
     end
 
     it "should return a parish string" do
       @response.search_multiple_results_for('parish').each do |item|
-        expect(item).to be_kind_of(String).or be_null
+        expect(item).to be_kind_of(String).or be_nil
       end
     end
 
@@ -202,7 +206,7 @@ describe Postcodesio do
 
     it "should return a msoa string" do
       @response.search_multiple_results_for('msoa').each do |item|
-        expect(item).to be_kind_of(String).or be_null
+        expect(item).to be_kind_of(String).or be_nil
       end
     end
     # admin ward and county are not documented however tested below
@@ -221,7 +225,7 @@ describe Postcodesio do
 
     it "should return a outcode string of 3-4 characters" do
       @response.search_multiple_results_for('outcode').each do |item|
-        expect(item.length).to be_between(3, 4).inclusive
+        expect(item.length).to be_between(2, 4).inclusive
       end
     end
 
