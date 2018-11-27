@@ -81,7 +81,7 @@ describe Postcodesio do
     end
     # admin ward and county are not documented however tested below
 
-    it "should return a admin_district string" do
+    it "should return an admin_district string" do
       expect(@response.search_single_result_for('admin_district')).to be_kind_of(String)
     end
 
@@ -89,7 +89,7 @@ describe Postcodesio do
       expect(@response.search_single_result_for('incode').length).to eq 3
     end
 
-    it "should return a outcode string of 3-4 characters" do
+    it "should return an outcode string of 3-4 characters" do
       expect(@response.search_single_result_for('outcode').length).to be_between(2, 4)
     end
   end
@@ -211,7 +211,7 @@ describe Postcodesio do
     end
     # admin ward and county are not documented however tested below
 
-    it "should return a admin_district string" do
+    it "should return an admin_district string" do
       @response.search_multiple_results_for('admin_district').each do |item|
         expect(item).to be_kind_of(String)
       end
@@ -223,7 +223,7 @@ describe Postcodesio do
       end
     end
 
-    it "should return a outcode string of 3-4 characters" do
+    it "should return an outcode string of 3-4 characters" do
       @response.search_multiple_results_for('outcode').each do |item|
         expect(item.length).to be_between(2, 4).inclusive
       end
