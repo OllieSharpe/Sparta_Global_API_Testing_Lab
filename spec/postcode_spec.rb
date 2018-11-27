@@ -37,7 +37,7 @@ describe Postcodesio do
     end
 
     it "should return a country which is one of the four constituent countries of the UK" do
-      expect(@response.search_single_result_for('country').downcase).to eq("england").or eq("ireland").or eq("scotland").or eq("wales")
+      expect(@response.search_single_result_for('country').downcase).to eq("england").or eq("northern ireland").or eq("scotland").or eq("wales")
     end
 
     it "should return a string value for NHS authority " do
