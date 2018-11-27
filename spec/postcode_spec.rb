@@ -99,7 +99,7 @@ describe Postcodesio do
     before(:all) do
       @postcode = RandomPostcodes.new
       @postcodesio = Postcodesio.new
-      @postcode_array = @postcode.get_random_postcodes(5)
+      @postcode_array = @postcode.get_random_postcodes(3)
       @postcodesio.get_multiple_postcodes(@postcode_array) #Add in array of postcodes
       @response = @postcodesio
     end
