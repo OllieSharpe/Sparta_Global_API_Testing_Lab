@@ -21,76 +21,76 @@ describe Postcodesio do
     end
 
     it "should return a postcode between 5-7 in length"  do
-      expect(@response.get_postcode(@response.single).delete(' ').length).to be_between(5,7).inclusive
+      expect(@response.search_single_result_for('postcode').delete(' ').length).to be_between(5,7).inclusive
     end
 
     it "should return an quality key integer between 1-9" do
-      expect(@response.get_quality(@response.single)).to be_between(1, 9).inclusive
+      expect(@response.search_single_result_for('quality')).to be_between(1, 9).inclusive
     end
 
     it "should return an ordnance survey eastings value as integer" do
-      expect(@response.get_eastings(@response.single)).to be_kind_of(Integer)
+      expect(@response.search_single_result_for('eastings')).to be_kind_of(Integer)
     end
 
     it "should return an ordnance survey northings value as integer" do
-      expect(@response.get_northings(@response.single)).to be_kind_of(Integer)
+      expect(@response.search_single_result_for('northings')).to be_kind_of(Integer)
     end
 
     it "should return a country which is one of the four constituent countries of the UK" do
-      expect(@response.get_country(@response.single).downcase).to eq("england").or eq("ireland").or eq("scotland").or eq("wales")
+      expect(@response.search_single_result_for('country').downcase).to eq("england").or eq("ireland").or eq("scotland").or eq("wales")
     end
 
     it "should return a string value for NHS authority " do
-      expect(@response.get_nhs(@response.single)).to be_kind_of(String)
+      expect(@response.search_single_result_for('nhs_ha')).to be_kind_of(String)
     end
 
     it "should return a longitude float value" do
-      expect(@response.get_longitude(@response.single)).to be_kind_of(Float)
+      expect(@response.search_single_result_for('longitude')).to be_kind_of(Float)
     end
 
     it "should return a latitude float value" do
-      expect(@response.get_latitude(@response.single)).to be_kind_of(Float)
+      expect(@response.search_single_result_for('latitude')).to be_kind_of(Float)
     end
 
     it "should return a parliamentary constituency string" do
-      expect(@response.get_parlamentary_constituency(@response.single)).to be_kind_of(String)
+      expect(@response.search_single_result_for('parliamentary_constituency')).to be_kind_of(String)
     end
 
     it "should return a european_electoral_region string" do
-      expect(@response.get_european_electoral_region(@response.single)).to be_kind_of(String)
+      expect(@response.search_single_result_for('european_electoral_region')).to be_kind_of(String)
     end
 
     it "should return a primary_care_trust string" do
-      expect(@response.get_primary_care_trust(@response.single)).to be_kind_of(String)
+      expect(@response.search_single_result_for('primary_care_trust')).to be_kind_of(String)
     end
 
     it "should return a region string" do
-      expect(@response.get_region(@response.single)).to be_kind_of(String)
+      expect(@response.search_single_result_for('region')).to be_kind_of(String)
     end
 
     it "should return a parish string" do
-      expect(@response.get_parish(@response.single)).to be_kind_of(String)
+      expect(@response.search_single_result_for('parish')).to be_kind_of(String)
     end
 
     it "should return a lsoa string" do
-      expect(@response.get_lsoa(@response.single)).to be_kind_of(String)
+      expect(@response.search_single_result_for('lsoa')).to be_kind_of(String)
     end
 
     it "should return a msoa string" do
-      expect(@response.get_msoa(@response.single)).to be_kind_of(String)
+      expect(@response.search_single_result_for('msoa')).to be_kind_of(String)
     end
     # admin ward and county are not documented however tested below
 
     it "should return a admin_district string" do
-      expect(@response.get_admin_district(@response.single)).to be_kind_of(String)
+      expect(@response.search_single_result_for('admin_district')).to be_kind_of(String)
     end
 
     it "should return a incode string of three characters" do
-      expect(@response.get_incode(@response.single).length).to eq 3
+      expect(@response.search_single_result_for('incode').length).to eq 3
     end
 
     it "should return a outcode string of 3-4 characters" do
-      expect(@response.get_outcode(@response.single).length).to be_between(3, 4)
+      expect(@response.search_single_result_for('outcode').length).to be_between(3, 4)
     end
   end
 
@@ -116,7 +116,7 @@ describe Postcodesio do
     end
 
     it "should return a postcode between 5-7 in length"  do
-      @response.get_postcode(@response.multiple).each do |item|
+      @response.search_multiple_results_for('postcode').each do |item|
         expect(item.delete(' ').length).to be_between(5, 7).inclusive
       end
     end

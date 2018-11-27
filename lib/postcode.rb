@@ -22,7 +22,17 @@ class Postcodesio
     @multiple = JSON.parse(self.class.post('/postcodes', body: { "postcodes" => postcodes_array}).body)
   end
 
-  # single
+  def search_multiple_results_for(search_word)
+    results_array = []
+    for i in 0..(@multiple.length - 1)
+      results_array << @multiple['result'][i]['result']["#{search_word}"]
+    end
+    return results_array
+  end
+
+  def search_single_result_for(search_word)
+    return @single['result']["#{search_word}"]
+  end
 
   def get_result(input)
     input['result']
@@ -30,82 +40,6 @@ class Postcodesio
 
   def get_status(input)
     input['status']
-  end
-
-  def get_postcode(input)
-    if (input['result'].length > 1)
-      return [input['result'][0]['result']['postcode'], input['result'][1]['result']['postcode'], input['result'][2]['result']['postcode']]
-    else
-      return input['result']['postcode']
-    end
-  end
-
-  def get_quality(input)
-    input['result']['quality']
-  end
-
-  def get_eastings(input)
-    input['result']['eastings']
-  end
-
-  def get_northings(input)
-    input['result']['northings']
-  end
-
-  def get_country(input)
-    input['result']['country']
-  end
-
-  def get_nhs(input)
-    input['result']['nhs_ha']
-  end
-
-  def get_longitude(input)
-    input['result']['longitude']
-  end
-
-  def get_latitude(input)
-    input['result']['latitude']
-  end
-
-  def get_parlamentary_constituency(input)
-    input['result']['parliamentary_constituency']
-  end
-
-  def get_european_electoral_region(input)
-    input['result']['european_electoral_region']
-  end
-
-  def get_primary_care_trust(input)
-    input['result']['primary_care_trust']
-  end
-
-  def get_region(input)
-    input['result']['region']
-  end
-
-  def get_parish(input)
-    input['result']['parish']
-  end
-
-  def get_lsoa(input)
-    input['result']['lsoa']
-  end
-
-  def get_msoa(input)
-    input['result']['msoa']
-  end
-
-  def get_admin_district(input)
-    input['result']['admin_district']
-  end
-
-  def get_incode(input)
-    input['result']['incode']
-  end
-
-  def get_outcode(input)
-    input['result']['outcode']
   end
 
 end
