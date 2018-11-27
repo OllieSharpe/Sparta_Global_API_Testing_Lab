@@ -33,7 +33,7 @@ class Postcodesio
   end
 
   def get_postcode(input)
-    if (input.length > 1)
+    if (input['result'].length > 1)
       return [input['result'][0]['result']['postcode'], input['result'][1]['result']['postcode'], input['result'][2]['result']['postcode']]
     else
       return input['result']['postcode']
