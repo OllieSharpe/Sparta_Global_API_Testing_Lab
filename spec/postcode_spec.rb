@@ -65,11 +65,11 @@ describe Postcodesio do
     end
 
     it "should return a region string" do
-      expect(@response.search_single_result_for('region')).to be_kind_of(String)
+      expect(@response.search_single_result_for('region')).to be_kind_of(String).or be_null
     end
 
     it "should return a parish string" do
-      expect(@response.search_single_result_for('parish')).to be_kind_of(String)
+      expect(@response.search_single_result_for('parish')).to be_kind_of(String).or be_null
     end
 
     it "should return a lsoa string" do
@@ -77,7 +77,7 @@ describe Postcodesio do
     end
 
     it "should return a msoa string" do
-      expect(@response.search_single_result_for('msoa')).to be_kind_of(String)
+      expect(@response.search_single_result_for('msoa')).to be_kind_of(String).or be_null
     end
     # admin ward and county are not documented however tested below
 
@@ -99,7 +99,7 @@ describe Postcodesio do
     before(:all) do
       @postcode = RandomPostcodes.new
       @postcodesio = Postcodesio.new
-      @postcodesio.get_multiple_postcodes(@postcode.get_random_postcodes(3)) #Add in array of postcodes
+      @postcodesio.get_multiple_postcodes(@postcode.get_random_postcodes(5)) #Add in array of postcodes
       @response = @postcodesio
     end
 
@@ -160,109 +160,71 @@ describe Postcodesio do
 
     it "should return a latitude float value" do
       @response.search_multiple_results_for('latitude').each do |item|
-        expect(item).to be_kind_of(Float)
+        expect(item).to be_kind_of(String)
       end
     end
 
     it "should return a parliamentary constituency string" do
       @response.search_multiple_results_for('parliamentary_constituency').each do |item|
-        expect(item).to be_kind_of(String)
+        expect(item).to be_kind_of(Float)
       end
     end
 
     it "should return a european_electoral_region string" do
+      @response.search_multiple_results_for('european_electoral_region').each do |item|
+        expect(item).to be_kind_of(String)
+      end
     end
 
     it "should return a primary_care_trust string" do
+      @response.search_multiple_results_for('primary_care_trust').each do |item|
+        expect(item).to be_kind_of(String)
+      end
     end
 
     it "should return a region string" do
+      @response.search_multiple_results_for('region').each do |item|
+        expect(item).to be_kind_of(String).or be_null
+      end
     end
 
     it "should return a parish string" do
+      @response.search_multiple_results_for('parish').each do |item|
+        expect(item).to be_kind_of(String).or be_null
+      end
     end
 
     it "should return a lsoa string" do
+      @response.search_multiple_results_for('lsoa').each do |item|
+        expect(item).to be_kind_of(String)
+      end
     end
 
     it "should return a msoa string" do
+      @response.search_multiple_results_for('msoa').each do |item|
+        expect(item).to be_kind_of(String).or be_null
+      end
     end
     # admin ward and county are not documented however tested below
 
     it "should return a admin_district string" do
+      @response.search_multiple_results_for('admin_district').each do |item|
+        expect(item).to be_kind_of(String)
+      end
     end
 
     it "should return a incode string of three characters" do
+      @response.search_multiple_results_for('incode').each do |item|
+        expect(item.length).to eq 3
+      end
     end
 
-    it "should return a msoa string" do
-    end
-
-    it "should return a incode string of 3-4 characters" do
-    end
-
-    it "should have a results hash" do
-    end
-
-    it "should return a postcode between 5-7 in length"  do
-    end
-
-    it "should return an quality key integer between 1-9" do
-    end
-
-    it "should return an ordnance survey eastings value as integer" do
-    end
-
-    it "should return an ordnance survey eastings value as integer" do
-    end
-
-    it "should return a country which is one of the four constituent countries of the UK" do
-    end
-
-    it "should return a string value for NHS authority " do
-    end
-
-    it "should return a longitude float value" do
-    end
-
-    it "should return a latitude float value" do
-    end
-
-    it "should return a parliamentary constituency string" do
-    end
-
-    it "should return a european_electoral_region string" do
-    end
-
-    it "should return a primary_care_trust string" do
-    end
-
-    it "should return a region string" do
-    end
-
-    it "should return a parish string" do
-    end
-
-    it "should return a lsoa string" do
-    end
-
-    it "should return a msoa string" do
-    end
-    # admin ward and county are not documented however tested below
-
-    it "should return a admin_district string" do
-    end
-
-    it "should return a incode string of three characters" do
-    end
-
-    it "should return a msoa string" do
-    end
-
-    it "should return a incode string of 3-4 characters" do
+    it "should return a outcode string of 3-4 characters" do
+      @response.search_multiple_results_for('outcode').each do |item|
+        expect(item.length).to be_between(3, 4).inclusive
+      end
     end
 
   end
-
 
 end
